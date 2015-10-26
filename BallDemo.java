@@ -1,4 +1,8 @@
 import java.awt.Color;
+import java.util.Random;
+import java.awt.*;
+import java.util.HashSet;
+import java.util.Iterator;
 
 /**
  * Class BallDemo - a short demonstration showing animation with the 
@@ -49,5 +53,49 @@ public class BallDemo
                 finished = true;
             }
         }
+    }
+    
+    public void boxbounce(int numberOfBalls)
+    { 
+        Random random = new Random();
+        HashSet balls = new HashSet();
+        myCanvas.setVisible(true);
+        
+        Rectangle box = new Rectangle (50,50,300,300);
+        myCanvas.draw(box);
+        
+        for (int i = 0; i < numberOfBalls; i++)
+        {
+            Dimension size = myCanvas.getSize();
+            int x = (int) box.getX() + random.nextInt((int) box.getWidth());
+            int y = (int) box.getY() + random.nextInt((int) box.getWidth());
+            int xSpeed = random.nextInt(30);
+            int ySpeed = random.nextInt(30);
+            Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            
+            BoxBall boxball = new BoxBall(x, y, 16, color, 400, myCanvas);
+            balls.add(boxball);
+            boxball.draw();
+        }
+        
+        boolean finished =  false;
+        while(!finished) {
+            myCanvas.wait(50);           // small delay
+            Iterator it = balls.iterator();
+            while(it.hasNext()) {
+                BoxBall ball = (BoxBall) it.next();
+                ball.move();
+                // stop once ball has travelled a certain distance on x axis
+                if(ball.getXPosition() >= 550 + 32*numberOfBalls) {
+                    finished = true;
+                }
+            }
+        }
+        Iterator it = balls.iterator();
+        while(it.hasNext()) {
+            BoxBall ball = (BoxBall) it.next();
+            ball.erase();
+        }
+
     }
 }

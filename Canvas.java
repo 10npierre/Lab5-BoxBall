@@ -12,7 +12,7 @@ import java.awt.geom.*;
  * @version 2011.07.31
  */
 
-public class Canvas
+public class Canvas 
 {
     private JFrame frame;
     private CanvasPane canvas;
