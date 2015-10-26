@@ -4,8 +4,9 @@ import java.awt.geom.*;
 /**
  * Write a description of class BoxBall here.
  * 
- * @author (your name) 
- * @version (a version number or a date)
+ * @author Nathan Pierre
+ * @version 2011.07.31
+ * 10/26/
  */
 public class BoxBall
 {
@@ -19,7 +20,8 @@ public class BoxBall
     private int yPosition;
     private final int groundPosition;      // y position of ground
     private Canvas canvas;
-    private int ySpeed = 1;                // initial downward speed
+    private int ySpeed;                // initial downward speed
+    private int xSpeed;
 
 
      /**
@@ -32,11 +34,13 @@ public class BoxBall
      * @param groundPos  the position of the ground (where the wall will bounce)
      * @param drawingCanvas  the canvas to draw this ball on
      */
-    public BoxBall(int xPos, int yPos, int ballDiameter, Color ballColor,
+    public BoxBall(int xPos, int yPos, int xBallSpeed, int yBallSpeed, int ballDiameter, Color ballColor,
                         int groundPos, Canvas drawingCanvas)
     {
         xPosition = xPos + 3;
         yPosition = yPos + 4;
+        xSpeed = xBallSpeed;
+        ySpeed = yBallSpeed;
         color = ballColor;
         diameter = ballDiameter;
         groundPosition = groundPos;

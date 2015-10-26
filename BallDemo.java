@@ -55,45 +55,59 @@ public class BallDemo
         }
     }
     
+    /**
+     * Simuate a nuber of balls bouncing in the rectange inside a canvas
+     */
     public void boxbounce(int numberOfBalls)
     { 
         Random random = new Random();
         HashSet balls = new HashSet();
         myCanvas.setVisible(true);
+        Iterator iterate = balls.iterator();
         
+        //making the rectange box in the canvas
         Rectangle box = new Rectangle (50,50,300,300);
         myCanvas.draw(box);
         
         for (int i = 0; i < numberOfBalls; i++)
         {
             Dimension size = myCanvas.getSize();
-            int x = (int) box.getX() + random.nextInt((int) box.getWidth());
+            
             int y = (int) box.getY() + random.nextInt((int) box.getWidth());
+            int x = (int) box.getX() + random.nextInt((int) box.getWidth());
+           
             int xSpeed = random.nextInt(30);
             int ySpeed = random.nextInt(30);
-            Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
+            Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(25));
             
-            BoxBall boxball = new BoxBall(x, y, 16, color, 400, myCanvas);
+            BoxBall boxball = new BoxBall(x, y, xSpeed, ySpeed, 16, color, 200, myCanvas);
             balls.add(boxball);
             boxball.draw();
         }
         
+        
         boolean finished =  false;
         while(!finished) {
+            
             myCanvas.wait(50);           // small delay
-            Iterator it = balls.iterator();
-            while(it.hasNext()) {
-                BoxBall ball = (BoxBall) it.next();
+
+            while(iterate.hasNext()) {
+                
+                BoxBall ball = (BoxBall) iterate.next();
                 ball.move();
-                // stop once ball has travelled a certain distance on x axis
-                if(ball.getXPosition() >= 550 + 32*numberOfBalls) {
+                
+                /**
+                // If the bal has traveed a certain distance it stops
+                if(ball.getXPosition() >= 550 + ball.getYPosition() >= 50) {
                     finished = true;
                 }
+                */
             }
+            
         }
-        Iterator it = balls.iterator();
-        while(it.hasNext()) {
-            BoxBall ball = (BoxBall) it.next();
+        while(iterate.hasNext()) {
+            
+            BoxBall ball = (BoxBall) iterate.next();
             ball.erase();
         }
 
