@@ -18,8 +18,7 @@ public class BoxBall
     private int diameter;
     private int xPosition;
     private int yPosition;
-    //private final int groundPosition // y position of ground
-    private final Rectangle walls;
+    private final Rectangle walls;      //boundries of the Rectangle box
     private Canvas canvas;
     private int ySpeed;                // initial downward speed
     private int xSpeed;
@@ -77,7 +76,7 @@ public class BoxBall
         yPosition += ySpeed;
         xPosition += xSpeed;
 
-        // check if it has hit the boundries of the wall
+        // check if the ball has hit the boundries of the wall
         if(yPosition >= (walls.getMaxX() - diameter) && ySpeed > 0) {
             yPosition = (int)(walls.getMaxY() - diameter);
             ySpeed = -ySpeed + ballDegradation;
