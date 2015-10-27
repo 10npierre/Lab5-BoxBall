@@ -18,7 +18,8 @@ public class BoxBall
     private int diameter;
     private int xPosition;
     private int yPosition;
-    private final int groundPosition;      // y position of ground
+    //private final int groundPosition // y position of ground
+    private final Rectangle walls;
     private Canvas canvas;
     private int ySpeed;                // initial downward speed
     private int xSpeed;
@@ -35,7 +36,7 @@ public class BoxBall
      * @param drawingCanvas  the canvas to draw this ball on
      */
     public BoxBall(int xPos, int yPos, int xBallSpeed, int yBallSpeed, int ballDiameter, Color ballColor,
-                        int groundPos, Canvas drawingCanvas)
+                        Rectangle wallBounds, Canvas drawingCanvas)
     {
         xPosition = xPos + 3;
         yPosition = yPos + 4;
@@ -43,7 +44,7 @@ public class BoxBall
         ySpeed = yBallSpeed;
         color = ballColor;
         diameter = ballDiameter;
-        groundPosition = groundPos;
+        walls = wallBounds;
         canvas = drawingCanvas;
     }
     
@@ -73,16 +74,25 @@ public class BoxBall
         erase();
             
         // compute new position
-        ySpeed += GRAVITY;
         yPosition += ySpeed;
-        xPosition +=2;
+        xPosition += xSpeed;
 
-        // check if it has hit the ground
-        if(yPosition >= (groundPosition - diameter) && ySpeed > 0) {
-            yPosition = (int)(groundPosition - diameter);
-            ySpeed = -ySpeed + ballDegradation; 
+        // check if it has hit the boundries of the wall
+        if(yPosition >= (walls.getMaxX() - diameter) && ySpeed > 0) {
+            yPosition = (int)(walls.getMaxY() - diameter);
+            ySpeed = -ySpeed + ballDegradation;
+        }else if(yPosition <= (walls.getMinY()) && ySpeed < 0) {
+            yPosition = (int)(walls.getMinY());
+            ySpeed = -ySpeed + ballDegradation;
+        }else if(xPosition >= (walls.getMaxX()) && xSpeed > 0) {
+            xPosition = (int)(walls.getMaxX() - diameter);
+            xSpeed = -xSpeed + ballDegradation;
+        }else if(xPosition <= (walls.getMinX()) && xSpeed <0) {
+            xPosition = (int)(walls.getMinX());
+            xSpeed = -xSpeed + ballDegradation;
         }
-
+                                                                                                                                                                                                                                                                                                                        
+        
         // draw again at new position
         draw();
     } 

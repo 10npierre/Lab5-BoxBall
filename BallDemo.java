@@ -63,12 +63,13 @@ public class BallDemo
         Random random = new Random();
         HashSet balls = new HashSet();
         myCanvas.setVisible(true);
-        Iterator iterate = balls.iterator();
+    
         
         //making the rectange box in the canvas
         Rectangle box = new Rectangle (50,50,300,300);
         myCanvas.draw(box);
         
+        //Drawing and placing the ball in the canvas
         for (int i = 0; i < numberOfBalls; i++)
         {
             Dimension size = myCanvas.getSize();
@@ -78,37 +79,33 @@ public class BallDemo
            
             int xSpeed = random.nextInt(30);
             int ySpeed = random.nextInt(30);
-            Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(25));
+            Color color = new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256));
             
-            BoxBall boxball = new BoxBall(x, y, xSpeed, ySpeed, 16, color, 200, myCanvas);
+            BoxBall boxball = new BoxBall(x, y, xSpeed, ySpeed, 16, color, box, myCanvas);
             balls.add(boxball);
             boxball.draw();
         }
         
-        
+         //moving the balls within the canvas   
         boolean finished =  false;
         while(!finished) {
             
-            myCanvas.wait(50);           // small delay
-
+            myCanvas.wait(50);           // small delay 
+            Iterator iterate = balls.iterator();
+            
             while(iterate.hasNext()) {
                 
                 BoxBall ball = (BoxBall) iterate.next();
                 ball.move();
+                myCanvas.draw(box);
                 
-                /**
-                // If the bal has traveed a certain distance it stops
-                if(ball.getXPosition() >= 550 + ball.getYPosition() >= 50) {
+                // If the bal has tralved to boundry it bounces of the wall
+                if(ball.getXPosition() >= 550 + 32*numberOfBalls) {
                     finished = true;
                 }
-                */
+                
             }
             
-        }
-        while(iterate.hasNext()) {
-            
-            BoxBall ball = (BoxBall) iterate.next();
-            ball.erase();
         }
 
     }
